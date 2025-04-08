@@ -1,38 +1,38 @@
 import React from 'react';
 
-
-const OrderSummary = (props) => {
+const Order = ({ order, totalAmount, addToOrder, removeFromOrder }) => {
   return (
-    <div>
-        <table>
+    <div className="container mt-5">
+      <h2 className="text-center mb-3">Your Order</h2>
+      <table className="table table-striped text-center">
+        <thead>
           <tr>
             <th>Item</th>
             <th>Add/Remove</th>
             <th>Price</th>
           </tr>
+        </thead>
+        <tbody>
           {
-           props.order.map((item) => {
-            <tr>
-              <td>{props.order.title}</td>
-              <td>
-                <i class="bi bi-dash"></i>
-                <i class="bi bi-plus-lg"></i>
-              </td>
-              <td>
-                {props.order.price}
-              </td>
-            </tr>
-        })}
-        <tr>
-            <td>Total</td>
-            <td></td>
-            <td>{totalAmount}</td>
+            order.map(item => (
+              <tr key={item.id}>
+                <td>{item.title} x{item.quantity} </td>
+                <td>
+                  <button type="button" onClick={() => removeFromOrder(item)} className="btn btn-danger mx-1">-</button>
+                  <button type="button" onClick={() => addToOrder(item)} className="btn btn-success mx-1">+</button>
+                </td>
+                <td>{item.cost.toFixed(2)}</td>
+              </tr>
+            ))
+          }
+          <tr>
+            <td colSpan="2"><strong>Total</strong></td>
+            <td><strong>{totalAmount}</strong></td>
           </tr>
-        </table>
-        
-      
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default OrderSummary;
+export default Order;
